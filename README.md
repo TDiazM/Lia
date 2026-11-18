@@ -1,4 +1,4 @@
-# mvp-pits-detailing
+# Lia
 
 Asistente de cotizaciones para Pits Detailing: busca productos en un catálogo local (SQLite),
 arma un carrito y genera una cotización en PDF. Incluye una página de demostración (`index.html`).
