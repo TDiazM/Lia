@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light">
+<link rel="icon" href="data:,">
+<title>Tótem de autoatención | Demo</title>
+<link rel="stylesheet" href="totem.css">
+</head>
+<body>
+<div class="marco">
+  <main id="pantalla" class="pantalla">
+
+    <!-- 1. Bienvenida -->
+    <section id="v-bienvenida" class="vista activa" aria-labelledby="t-bienvenida">
+      <div class="bv-fondo" aria-hidden="true"><i></i><i></i><i></i></div>
+      <div class="bv-contenido">
+        <span class="bv-etiqueta">Autoatención</span>
+        <div class="bv-logo" aria-hidden="true">
+          <svg viewBox="0 0 64 64"><path d="M32 6C32 6 14 26 14 40a18 18 0 0 0 36 0C50 26 32 6 32 6Z" fill="#f6efd9"/><path d="M24 42a8 8 0 0 0 8 8" stroke="#5e7a5d" stroke-width="3.5" fill="none" stroke-linecap="round"/><path d="M47 10l1.8 4.2L53 16l-4.2 1.8L47 22l-1.8-4.2L41 16l4.2-1.8Z" fill="#c9796a"/></svg>
+        </div>
+        <p class="bv-marca">PITS DETAILING</p>
+        <p class="bv-sub">Productos de detailing automotriz</p>
+        <h1 id="t-bienvenida">¡Bienvenido a nuestro sistema de autoatención!</h1>
+        <button type="button" class="btn btn-gigante" data-acc="comenzar">Comenzar pedido</button>
+        <p class="bv-toque"><span aria-hidden="true">👆</span> Toca para comenzar</p>
+      </div>
+      <p class="bv-pie">Elige tus productos y retíralos en el mesón</p>
+    </section>
+
+    <!-- 2. Catálogo -->
+    <section id="v-catalogo" class="vista" aria-labelledby="t-catalogo">
+      <header class="cab">
+        <div class="cab-marca"><span class="cab-gota" aria-hidden="true">💧</span> PITS DETAILING</div>
+        <button type="button" class="cab-carrito" data-acc="ver-carrito" aria-label="Ver carrito">
+          <span aria-hidden="true">🛒</span><b id="cab-cuenta">0</b>
+        </button>
+      </header>
+      <h2 id="t-catalogo" class="titulo">¿Qué necesitas hoy?</h2>
+      <div id="tabs" class="tabs" role="tablist" aria-label="Categorías"></div>
+      <div id="lista" class="lista" tabindex="-1"></div>
+      <button type="button" id="barra-carrito" class="barra-carrito" data-acc="ver-carrito" disabled></button>
+    </section>
+
+    <!-- 3. Carrito -->
+    <section id="v-carrito" class="vista" aria-labelledby="t-carrito">
+      <header class="cab">
+        <button type="button" class="cab-volver" data-acc="volver-catalogo">← Seguir comprando</button>
+      </header>
+      <h2 id="t-carrito" class="titulo">Tu carrito</h2>
+      <div id="items-carrito" class="lista lista-carrito"></div>
+      <div class="pie-total">
+        <div class="total-fila"><span>Total</span><strong id="carrito-total">$0</strong></div>
+        <div class="fila-botones">
+          <button type="button" class="btn btn-sec" data-acc="volver-catalogo">Seguir comprando</button>
+          <button type="button" id="btn-confirmar" class="btn btn-prim" data-acc="confirmar">Confirmar pedido</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. Resumen -->
+    <section id="v-resumen" class="vista" aria-labelledby="t-resumen">
+      <header class="cab">
+        <button type="button" class="cab-volver" data-acc="volver-carrito">← Volver al carrito</button>
+      </header>
+      <h2 id="t-resumen" class="titulo">Resumen de tu pedido</h2>
+      <div class="lista lista-resumen">
+        <div class="tabla" id="tabla-resumen"></div>
+      </div>
+      <div class="pie-total">
+        <div class="total-fila"><span>Total del pedido</span><strong id="resumen-total">$0</strong></div>
+        <button type="button" class="btn btn-prim btn-ancho" data-acc="enviar">Enviar pedido a bodega</button>
+        <p class="nota">Demostración: no se realiza ningún pago.</p>
+      </div>
+    </section>
+
+    <!-- 5. Seguimiento -->
+    <section id="v-seguimiento" class="vista" aria-labelledby="t-seg">
+      <div id="seg-contenido" class="seg"></div>
+    </section>
+
+    <!-- 6. Ticket -->
+    <section id="v-ticket" class="vista" aria-labelledby="t-ticket">
+      <div id="ticket-contenido" class="tk"></div>
+    </section>
+
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  </main>
+</div>
+
+<script src="catalogo.js"></script>
+<script src="store.js"></script>
+<script src="totem.js"></script>
+<script src="/nav.js" defer></script>
+</body>
+</html>

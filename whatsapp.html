@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="data:,">
+<title>WhatsApp | Próximamente | PITS</title>
+<style>
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%}
+body{font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;color:#faf7ee;padding-top:var(--pits-nav-h,0px);
+  background:radial-gradient(circle at 20% 0,#3f533e 0,#18221a 65%) fixed;min-height:100vh;display:flex;flex-direction:column}
+main{flex:1;display:grid;place-items:center;padding:32px 16px}
+.tarjeta{width:100%;max-width:720px;background:#faf7ee;color:#1f2a1e;border-radius:24px;padding:clamp(24px,5vw,48px);
+  box-shadow:0 24px 60px rgba(0,0,0,.45);animation:entra .5s ease both}
+@keyframes entra{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.insignia{display:inline-flex;align-items:center;gap:8px;background:rgba(201,121,106,.16);color:#9c4f41;border:1px solid rgba(201,121,106,.4);
+  padding:6px 14px;border-radius:99px;font-size:12px;font-weight:800;letter-spacing:.12em;text-transform:uppercase}
+.punto{width:8px;height:8px;border-radius:50%;background:#c9796a;animation:pulso 1.8s infinite}
+@keyframes pulso{0%{box-shadow:0 0 0 0 rgba(201,121,106,.6)}70%{box-shadow:0 0 0 8px rgba(201,121,106,0)}100%{box-shadow:0 0 0 0 rgba(201,121,106,0)}}
+h1{margin:18px 0 6px;font-size:clamp(32px,6vw,52px);line-height:1.05;color:#283627}
+.sub{margin:0 0 20px;font-size:clamp(16px,2.4vw,19px);font-weight:700;color:#5e7a5d}
+p{margin:0 0 16px;line-height:1.65;font-size:15px;color:#3b4a39}
+h2{margin:26px 0 10px;font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:#6fa074}
+ul{margin:0;padding:0;list-style:none;display:grid;gap:10px}
+li{display:flex;gap:10px;align-items:flex-start;font-size:14px;line-height:1.5;color:#3b4a39}
+li::before{content:"✓";flex:none;width:22px;height:22px;border-radius:50%;background:#cde2c7;color:#283627;font-weight:800;font-size:12px;display:grid;place-items:center;margin-top:1px}
+.aviso{margin-top:24px;padding:14px 16px;border-radius:14px;background:#f6efd9;border:1px solid #ebdcb4;font-size:13px;color:#664d03}
+.acciones{display:flex;gap:12px;flex-wrap:wrap;margin-top:28px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;text-decoration:none;font-weight:700;font-size:15px;padding:14px 22px;border-radius:14px;
+  border:2px solid #283627;color:#283627;background:transparent;transition:transform .15s,background .2s,box-shadow .2s}
+.btn:hover{background:rgba(40,54,39,.08)}
+.btn:active{transform:scale(.98)}
+.btn:focus-visible{outline:3px solid #c9796a;outline-offset:2px}
+.btn.prim{background:#c9796a;border-color:#c9796a;color:#fff;box-shadow:0 8px 20px rgba(201,121,106,.35)}
+.btn.prim:hover{background:#b56354}
+@media (max-width:520px){.btn{width:100%}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<main>
+  <section class="tarjeta" aria-labelledby="titulo">
+    <span class="insignia"><span class="punto"></span> Próximamente</span>
+    <h1 id="titulo">Próximamente</h1>
+    <p class="sub">Integración con WhatsApp · Opción 1</p>
+    <p>Estamos preparando la conexión del asistente de PITS con WhatsApp. Tus clientes podrán escribir como lo hacen a diario y recibir atención automática, a cualquier hora, sin instalar nada nuevo.</p>
+
+    <h2>Lo que incluirá</h2>
+    <ul>
+      <li>Consulta del catálogo en lenguaje natural: el cliente escribe lo que busca y recibe opciones con precio.</li>
+      <li>Carrito por conversación: el cliente elige productos respondiendo con el número de la opción.</li>
+      <li>Cotización en PDF enviada directamente al chat, con los productos elegidos y el total.</li>
+      <li>Una sesión independiente por cada número de teléfono.</li>
+      <li>Conexión con la API oficial de WhatsApp (Meta Cloud API), reutilizando el mismo motor de búsqueda y cotizaciones del chatbot web.</li>
+    </ul>
+
+    <div class="aviso"><strong>Estado:</strong> esta solución todavía no está implementada. Mientras tanto, puedes probar el chatbot web y el tótem de autoatención, que ya funcionan.</div>
+
+    <div class="acciones">
+      <a class="btn prim" href="/">← Volver al inicio</a>
+      <a class="btn" href="/chatbot">Ver chatbot web</a>
+      <a class="btn" href="/totem">Ver tótem</a>
+    </div>
+  </section>
+</main>
+<script src="/nav.js" defer></script>
+</body>
+</html>

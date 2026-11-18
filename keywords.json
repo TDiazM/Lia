@@ -1,0 +1,16 @@
+{
+  "sinonimos": {
+    "shampoo": ["shampu", "champú", "lavado", "jabón", "espuma"],
+    "limpiador": ["limpia", "limpieza", "desengrasante", "lavalozas"],
+    "llantas": ["neumaticos", "ruedas", "aro", "rin"],
+    "cera": ["paste wax", "brillo", "proteccion", "sellador", "lustrar"],
+    "microfibra": ["paño", "trapo", "toalla", "secado"]
+  },
+  "prioridades": [
+    "shampoo",
+    "limpiador",
+    "llantas",
+    "cera",
+    "microfibra"
+  ]
+}

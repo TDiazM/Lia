@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="data:,">
+<title>Panel de bodega | Demo</title>
+<link rel="stylesheet" href="bodega.css">
+</head>
+<body>
+<header class="cab">
+  <div class="cab-izq">
+    <span class="cab-icono" aria-hidden="true">📦</span>
+    <div>
+      <h1>Panel de bodega</h1>
+      <p>Pedidos del tótem en tiempo real</p>
+    </div>
+  </div>
+  <div class="cab-der">
+    <div class="contadores" id="contadores" aria-live="polite"></div>
+    <button type="button" class="btn-reinicio" id="btn-reinicio" title="Borra los pedidos de la demostración">Reiniciar demo</button>
+  </div>
+</header>
+<main id="tablero" class="tablero" aria-label="Pedidos por estado"></main>
+<script src="catalogo.js"></script>
+<script src="store.js"></script>
+<script src="bodega.js"></script>
+<script src="/nav.js" defer></script>
+</body>
+</html>

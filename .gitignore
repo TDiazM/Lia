@@ -1,0 +1,14 @@
+# PDFs y bitácoras generados en ejecución
+cotizaciones/
+*.pdf
+logs/
+*.log
+
+# Python
+__pycache__/
+*.pyc
+
+# Entornos virtuales y secretos
+venv/
+.venv/
+.env

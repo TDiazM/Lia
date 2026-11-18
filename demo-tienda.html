@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="data:,">
+<title>Maqueta de demostración | Tienda de detailing con asistente de cotizaciones</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;color:#1f2a1e;background:#fff;line-height:1.5;padding-top:var(--pits-nav-h,0px)}
+.aviso{background:#fff3cd;color:#664d03;text-align:center;padding:8px 12px;font-size:13px;border-bottom:1px solid #ffe69c}
+header{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:16px 32px;border-bottom:1px solid #eee;flex-wrap:wrap}
+.logo{font-weight:800;font-size:20px;letter-spacing:.04em;color:#283627}
+nav{display:flex;gap:20px;font-size:14px;flex-wrap:wrap}
+nav a{color:#283627;text-decoration:none}
+nav a:hover{text-decoration:underline}
+.hero{background:linear-gradient(135deg,#283627,#5e7a5d);color:#faf7ee;padding:64px 32px;text-align:center}
+.hero h1{margin:0 0 12px;font-size:clamp(26px,4vw,40px)}
+.hero p{margin:0 auto 24px;max-width:560px;opacity:.9}
+.hero a{display:inline-block;background:#c9796a;color:#fff;text-decoration:none;padding:12px 22px;border-radius:10px;font-weight:700}
+main{max-width:1100px;margin:0 auto;padding:40px 24px}
+h2{margin:0 0 20px;font-size:24px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:20px}
+.prod{border:1px solid #e6e1d2;border-radius:14px;padding:14px;display:flex;flex-direction:column;gap:6px;background:#fff}
+.img{height:130px;border-radius:10px;background:linear-gradient(135deg,#cde2c7,#e8f2e5);display:flex;align-items:center;justify-content:center;font-size:44px;font-weight:800;color:#5e7a5d}
+.cat{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:#6fa074;font-weight:700}
+.prod h3{margin:0;font-size:14px;font-weight:600;min-height:60px}
+.precio{margin:0;font-weight:800;font-size:18px}
+.prod button{margin-top:auto;border:1px solid #283627;background:#fff;color:#283627;border-radius:10px;padding:8px;font-weight:600;cursor:pointer}
+.prod button:hover{background:#283627;color:#fff}
+.nota{margin-top:36px;padding:16px 20px;background:#faf7ee;border:1px solid #ebdcb4;border-radius:12px;font-size:14px}
+code{background:#f1ede0;padding:2px 6px;border-radius:6px;font-size:13px}
+footer{margin-top:40px;padding:24px 32px;background:#283627;color:#cde2c7;font-size:13px;text-align:center}
+</style>
+</head>
+<body>
+<div class="aviso"><strong>Maqueta de demostración.</strong> Así se vería el asistente dentro de una tienda en línea. No es el sitio de ningún negocio real.</div>
+<header>
+  <div class="logo">TIENDA DEMO</div>
+  <nav aria-label="Principal">
+    <a href="#productos">Limpieza y cuidado</a><a href="#productos">Protección</a><a href="#productos">Accesorios</a><a href="#productos">Ruedas</a>
+  </nav>
+</header>
+<section class="hero">
+  <h1>Todo para el detailing de tu auto</h1>
+  <p>Busca productos, arma tu lista y pide tu cotización en PDF con el asistente de la esquina inferior derecha.</p>
+  <a href="#productos">Ver productos</a>
+</section>
+<main id="productos">
+  <h2>Productos destacados</h2>
+  <div class="grid">
+      <article class="prod">
+        <div class="img" aria-hidden="true">V</div>
+        <span class="cat">Lavado</span>
+        <h3>Vonixx V-Floc 1,5 L – Shampoo Automotriz Concentrado (Lavado Ecológico)</h3>
+        <p class="precio">$22.990</p>
+        <button type="button" data-q="Vonixx V-Floc 1,5 L – Shampoo Automotriz Concentrado (Lavado Ecológico)">Preguntar al asistente</button>
+      </article>
+      <article class="prod">
+        <div class="img" aria-hidden="true">V</div>
+        <span class="cat">Protección</span>
+        <h3>Vintex Cera Express 500 ml – Cera Líquida Protección y Brillo para Auto</h3>
+        <p class="precio">$8.990</p>
+        <button type="button" data-q="Vintex Cera Express 500 ml – Cera Líquida Protección y Brillo para Auto">Preguntar al asistente</button>
+      </article>
+      <article class="prod">
+        <div class="img" aria-hidden="true">Z</div>
+        <span class="cat">Secado</span>
+        <h3>Zacs Toalla Microfibra 40x60cm 350gsm</h3>
+        <p class="precio">$4.990</p>
+        <button type="button" data-q="Zacs Toalla Microfibra 40x60cm 350gsm">Preguntar al asistente</button>
+      </article>
+      <article class="prod">
+        <div class="img" aria-hidden="true">S</div>
+        <span class="cat">Ruedas</span>
+        <h3>SONAX LIMPIADOR DE LLANTAS STAR 750ML</h3>
+        <p class="precio">$8.990</p>
+        <button type="button" data-q="SONAX LIMPIADOR DE LLANTAS STAR 750ML">Preguntar al asistente</button>
+      </article>
+      <article class="prod">
+        <div class="img" aria-hidden="true">C</div>
+        <span class="cat">Protección</span>
+        <h3>Chemical Guys Cera Y Sellador Instawax Carnauba</h3>
+        <p class="precio">$26.990</p>
+        <button type="button" data-q="Chemical Guys Cera Y Sellador Instawax Carnauba">Preguntar al asistente</button>
+      </article>
+      <article class="prod">
+        <div class="img" aria-hidden="true">V</div>
+        <span class="cat">Limpieza</span>
+        <h3>Vintex Removex 5 L Desengrasante y Limpiador de Chasis – Desengrasante Concentrado para Suciedad Pesada</h3>
+        <p class="precio">$49.990</p>
+        <button type="button" data-q="Vintex Removex 5 L Desengrasante y Limpiador de Chasis – Desengrasante Concentrado para Suciedad Pesada">Preguntar al asistente</button>
+      </article>
+      <article class="prod">
+        <div class="img" aria-hidden="true">Z</div>
+        <span class="cat">Accesorios</span>
+        <h3>Zacs Aplicador Neumatico</h3>
+        <p class="precio">$2.490</p>
+        <button type="button" data-q="Zacs Aplicador Neumatico">Preguntar al asistente</button>
+      </article>
+      <article class="prod">
+        <div class="img" aria-hidden="true">M</div>
+        <span class="cat">Accesorios</span>
+        <h3>Motorlife Cepillo Limpieza Multiuso</h3>
+        <p class="precio">$9.690</p>
+        <button type="button" data-q="Motorlife Cepillo Limpieza Multiuso">Preguntar al asistente</button>
+      </article>
+  </div>
+</main>
+<footer>Maqueta de demostración &middot; los productos y precios provienen del catálogo cargado en el asistente</footer>
+<script src="/widget.js" data-titulo="Asistente de cotizaciones" defer></script>
+<script src="/nav.js" defer></script>
+<script>
+document.addEventListener('click', function (e) {
+  var b = e.target.closest('button[data-q]');
+  if (b && window.PitsChat) window.PitsChat.send(b.getAttribute('data-q'));
+});
+</script>
+</body>
+</html>
