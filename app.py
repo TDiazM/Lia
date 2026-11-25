@@ -21,6 +21,7 @@ from reportlab.lib.units import mm
 from reportlab.platypus import HRFlowable, Paragraph, SimpleDocTemplate, Spacer, Table, TableStyle
 
 from api_logger import registrar_api
+import plataforma
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 DB_PATH = os.path.join(BASE_DIR, "data", "pits.db")
@@ -30,6 +31,9 @@ WIDGET_PATH = os.path.join(BASE_DIR, "widget.js")
 DEMO_PATH = os.path.join(BASE_DIR, "demo-tienda.html")
 WHATSAPP_PATH = os.path.join(BASE_DIR, "whatsapp.html")
 NAV_PATH = os.path.join(BASE_DIR, "nav.js")
+LOGIN_PATH = os.path.join(BASE_DIR, "login.html")
+ADMIN_PATH = os.path.join(BASE_DIR, "admin.html")
+CLIENTE_PATH = os.path.join(BASE_DIR, "cliente.html")
 TOTEM_DIR = os.path.join(BASE_DIR, "totem")
 
 PDF_NOMBRE_RE = re.compile(r"(?:Cotizacion|Ticket)_\w{1,20}_\d{8}_\d{6}\.pdf")
@@ -78,6 +82,17 @@ app.add_middleware(
 
 sesiones = {}
 lock = threading.Lock()
+
+
+def _registrar(funcion, *args):
+    """Guarda datos en la plataforma (data/plataforma.db). Si falla, el chat sigue funcionando igual."""
+    try:
+        funcion(*args)
+    except Exception as e:  # noqa: BLE001 - el registro nunca debe afectar al cliente
+        print(f"[plataforma] no se pudo registrar: {e}")
+
+
+_registrar(plataforma.iniciar)
 
 
 def obtener_sesion(session_id: str):
@@ -322,6 +337,7 @@ def procesar_mensaje(session_id: str, texto: str):
         archivo = generar_pdf_cotizacion(carrito, session_id)
         cantidad = len(carrito)
         total = sum(p["precio"] for p in carrito)
+        _registrar(plataforma.registrar_cotizacion, "web", session_id, archivo, list(carrito))
         carrito.clear()
         return (
             f"✅ ¡Cotización generada! {cantidad} producto(s), total {fmt_precio(total)}.\n"
@@ -372,6 +388,7 @@ def chat_web(data: ChatEntrada):
         return {"respuesta": "Escribe el producto que buscas.", "pdf": None}
     with lock:
         respuesta, archivo = procesar_mensaje(data.session_id, mensaje)
+    _registrar(plataforma.registrar_intercambio, "web", data.session_id, mensaje, respuesta)
     return {"respuesta": respuesta, "pdf": f"/api/pdf/{archivo}" if archivo else None}
 
 
@@ -430,6 +447,31 @@ def demo_tienda():
 @app.get("/whatsapp")
 def whatsapp_proximamente():
     return _archivo_html(WHATSAPP_PATH, "whatsapp.html")
+
+
+@app.get("/plataforma")
+def plataforma_panel():
+    # Enlace de siempre: lleva al inicio de sesión, que redirige según el rol (admin o cliente)
+    return RedirectResponse("/login", status_code=302)
+
+
+@app.get("/login")
+def login_pagina():
+    return _archivo_html(LOGIN_PATH, "login.html")
+
+
+@app.get("/admin")
+def admin_panel():
+    return _archivo_html(ADMIN_PATH, "admin.html")
+
+
+@app.get("/cliente")
+def cliente_panel():
+    return _archivo_html(CLIENTE_PATH, "cliente.html")
+
+
+# Pedidos del tótem (/api/pedidos) y API del panel (/api/plataforma/*): ver plataforma.py
+plataforma.registrar_rutas(app, cargar_catalogo, config, lambda: len(grupos_sinonimos))
 
 
 @app.get("/nav.js")

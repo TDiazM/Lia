@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Lia · Panel del cliente</title>
+<style>
+  :root{--cream-50:#FAF7EE;--cream-100:#F6EFD9;--cream-200:#EBDCB4;--mint-100:#E8F2E5;--mint-200:#CDE2C7;--sage:#86B08A;
+        --forest-800:#5E7A5D;--forest-900:#3F533E;--forest-950:#283627;--terra:#C9796A;--terra-600:#B56354}
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--cream-100);color:var(--forest-950);font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+       padding-top:var(--pits-nav-h,0px);line-height:1.5}
+  .wrap{max-width:1100px;margin:0 auto;padding:24px 16px 64px}
+  h1{font-size:clamp(24px,4vw,34px);margin:0 0 4px;font-weight:800;letter-spacing:-.02em}
+  h1 span{color:var(--terra)}
+  .sub{color:rgba(40,54,39,.75);margin:0 0 20px}
+  .tabs{display:flex;gap:8px;overflow-x:auto;padding-bottom:6px;margin-bottom:18px;-webkit-overflow-scrolling:touch}
+  .tab{border:1px solid var(--mint-200);background:var(--cream-50);color:var(--forest-900);font:inherit;font-weight:600;font-size:14px;
+       padding:9px 16px;border-radius:12px;cursor:pointer;white-space:nowrap;transition:background .2s,transform .15s,box-shadow .2s}
+  .tab:hover{background:var(--mint-100)}
+  .tab[aria-selected=true]{background:var(--forest-800);color:var(--cream-50);border-color:var(--forest-800);box-shadow:0 4px 12px rgba(63,83,62,.25)}
+  .tab:focus-visible,.btn:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid var(--terra);outline-offset:2px}
+  .card{background:var(--cream-50);border:1px solid var(--mint-200);border-radius:18px;padding:18px;box-shadow:0 1px 3px rgba(40,54,39,.06)}
+  .grid{display:grid;gap:14px}
+  .kpis{grid-template-columns:repeat(auto-fit,minmax(170px,1fr))}
+  .kpi .n{font-size:30px;font-weight:800;color:var(--forest-800)}
+  .kpi .l{font-size:12px;font-weight:600;color:rgba(40,54,39,.7);text-transform:uppercase;letter-spacing:.05em}
+  .kpi .s{font-size:12px;color:rgba(40,54,39,.65);margin-top:2px}
+  h2{font-size:18px;margin:26px 0 10px}
+  .canales{grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
+  .badge{display:inline-block;font-size:11px;font-weight:700;padding:3px 10px;border-radius:99px;border:1px solid}
+  .b-ok{background:var(--mint-200);color:var(--forest-900);border-color:var(--sage)}
+  .b-demo{background:var(--cream-200);color:#7a5a1f;border-color:#d8c38a}
+  .b-dev{background:rgba(201,121,106,.15);color:var(--terra-600);border-color:rgba(201,121,106,.4)}
+  .btn{display:inline-flex;align-items:center;gap:6px;background:var(--forest-800);color:var(--cream-50);font:inherit;font-weight:600;font-size:13px;
+       padding:8px 14px;border-radius:10px;border:0;text-decoration:none;cursor:pointer;transition:background .2s,transform .15s}
+  .btn:hover{background:var(--forest-900);transform:translateY(-1px)}
+  .btn.sec{background:var(--cream-50);color:var(--forest-900);border:1px solid var(--mint-200)}
+  .btn.sec:hover{background:var(--mint-100)}
+  .row{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+  .bars{display:flex;align-items:flex-end;gap:8px;height:130px;margin-top:8px}
+  .bar{flex:1;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;gap:4px;height:100%;min-width:0}
+  .bar i{display:block;width:100%;max-width:34px;background:var(--sage);border-radius:6px 6px 0 0;min-height:2px;transition:height .5s}
+  .bar b{font-size:11px}
+  .bar span{font-size:10px;color:rgba(40,54,39,.65)}
+  .leyenda{font-size:12px;color:rgba(40,54,39,.7);display:flex;gap:12px;flex-wrap:wrap}
+  table{width:100%;border-collapse:collapse;font-size:14px}
+  th,td{text-align:left;padding:9px 10px;border-bottom:1px solid var(--mint-200);vertical-align:top}
+  th{font-size:12px;text-transform:uppercase;letter-spacing:.05em;color:rgba(40,54,39,.7)}
+  .scroll{overflow-x:auto}
+  .vacio{color:rgba(40,54,39,.7);padding:18px;text-align:center}
+  .aviso{background:rgba(201,121,106,.12);border:1px solid rgba(201,121,106,.4);color:var(--terra-600);border-radius:12px;padding:12px 14px;margin-bottom:14px;font-size:14px}
+  .nota{background:var(--cream-200);border:1px solid #d8c38a;color:#6b4f17;border-radius:12px;padding:10px 14px;font-size:13px;margin:10px 0}
+  input[type=text],input[type=password],input[type=search]{font:inherit;padding:9px 12px;border-radius:10px;border:1px solid var(--mint-200);background:#fff;min-width:0;flex:1}
+  .chat{display:flex;flex-direction:column;gap:8px;margin-top:10px;max-height:60vh;overflow:auto}
+  .msg{padding:8px 12px;border-radius:14px;max-width:85%;white-space:pre-wrap;word-break:break-word;font-size:14px}
+  .m-cliente{align-self:flex-end;background:var(--mint-200)}
+  .m-bot{align-self:flex-start;background:#fff;border:1px solid var(--mint-200)}
+  .msg small{display:block;font-size:10px;color:rgba(40,54,39,.55);margin-top:2px}
+  .link{background:none;border:0;color:var(--terra-600);font:inherit;font-weight:600;cursor:pointer;padding:0;text-decoration:underline}
+  dl{display:grid;grid-template-columns:minmax(120px,200px) 1fr;gap:8px 14px;margin:0}
+  dt{font-weight:600;color:rgba(40,54,39,.75)} dd{margin:0;word-break:break-word}
+  .prox{opacity:.85;border-style:dashed}
+  @media (max-width:520px){dl{grid-template-columns:1fr}.wrap{padding:16px 12px 48px}}
+  @media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+
+  .userbar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:space-between;margin-bottom:6px}
+  .userbar .quien{font-size:13px;color:rgba(40,54,39,.75)}
+  .userbar .quien b{color:var(--forest-950)}
+  .chips{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 14px}
+  .chip{border:1px solid var(--mint-200);background:#fff;color:var(--forest-900);font:inherit;font-size:13px;font-weight:600;padding:6px 12px;border-radius:99px;cursor:pointer;transition:background .2s}
+  .chip:hover{background:var(--mint-100)}
+  .chip[aria-pressed=true]{background:var(--terra);border-color:var(--terra);color:#fff}
+  .chip small{opacity:.8;font-weight:500}
+  .form{display:grid;gap:12px;max-width:380px}
+  .form label{font-size:13px;font-weight:600;display:grid;gap:4px}
+  .ok{background:var(--mint-200);border:1px solid var(--sage);color:var(--forest-900);border-radius:12px;padding:10px 14px;font-size:14px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Panel del <span>cliente</span></h1>
+  <p class="sub">Pedidos, cotizaciones y conversaciones de tu negocio.</p>
+  <div class="userbar" id="userbar"></div>
+  <div class="tabs" role="tablist" id="tabs"></div>
+  <main id="vista" aria-live="polite"></main>
+</div>
+<script>
+(function () {
+
+  'use strict';
+  var $vista = document.getElementById('vista'), $tabs = document.getElementById('tabs');
+  var tabActual = 'resumen', seq = 0, yo = null;
+  var ESTADOS = ['Pedido recibido', 'En preparación', 'Listo para retirar', 'Entregado'];
+
+  function esc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
+  function clp(n) { return '$' + Number(n || 0).toLocaleString('es-CL'); }
+  function fecha(iso) { if (!iso) return '—'; var d = new Date(iso); return isNaN(d) ? esc(iso) : d.toLocaleString('es-CL', { dateStyle: 'short', timeStyle: 'short' }); }
+  function canalNombre(c) { return { web: 'Chatbot web', totem: 'Tótem', whatsapp: 'WhatsApp' }[c] || esc(c); }
+  function badge(est) {
+    var m = { operativo: ['b-ok', 'Operativo'], demo: ['b-demo', 'Demo'], en_desarrollo: ['b-dev', 'En desarrollo'] }[est] || ['b-demo', esc(est)];
+    return '<span class="badge ' + m[0] + '">' + m[1] + '</span>';
+  }
+  function kpi(l, n, s) { return '<div class="card kpi"><div class="l">' + esc(l) + '</div><div class="n">' + esc(n) + '</div><div class="s">' + esc(s) + '</div></div>'; }
+  function tabla(cols, filas) {
+    if (!filas.length) return '<div class="vacio">Aún no hay registros.</div>';
+    return '<div class="scroll"><table><thead><tr>' + cols.map(function (c) { return '<th>' + esc(c) + '</th>'; }).join('') + '</tr></thead><tbody>' + filas.join('') + '</tbody></table></div>';
+  }
+
+  function irALogin() { location.href = '/login?volver=' + encodeURIComponent(location.pathname); }
+
+  function pedir(ruta) {
+    return fetch(API + ruta, { credentials: 'same-origin' }).then(function (r) {
+      if (r.ok) return r.json();
+      var e = new Error('HTTP ' + r.status); e.status = r.status; throw e;
+    });
+  }
+  function enviarJSON(url, cuerpo) {
+    return fetch(url, { method: 'POST', credentials: 'same-origin', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(cuerpo || {}) })
+      .then(function (r) { return r.json().catch(function () { return {}; }).then(function (j) { if (!r.ok) { var e = new Error(typeof j.detail === 'string' ? j.detail : 'Error'); e.status = r.status; throw e; } return j; }); });
+  }
+
+  function error(e) {
+    if (e.status === 401) { irALogin(); return; }
+    if (e.status === 403) {
+      $vista.innerHTML = '<div class="aviso"><b>Sin permiso.</b> Tu usuario no puede ver esta sección. <a class="link" href="/login">Cambiar de usuario</a></div>';
+      return;
+    }
+    $vista.innerHTML = '<div class="aviso"><b>No se pudo cargar la información.</b> ' + esc(e.message) + '. Verifica que el servidor esté en marcha.</div>';
+  }
+
+  function barras(dias, series) {   // series: [{valores, color}]
+    var max = 1; series.forEach(function (s) { s.valores.forEach(function (v) { max = Math.max(max, v); }); });
+    return '<div class="bars">' + dias.map(function (d, i) {
+      return '<div class="bar"><div style="display:flex;align-items:flex-end;gap:2px;height:100%;width:100%;justify-content:center">' +
+        series.map(function (s) { return '<i style="height:' + Math.round(s.valores[i] / max * 100) + '%;background:' + s.color + ';max-width:14px" title="' + s.valores[i] + '"></i>'; }).join('') +
+        '</div><span>' + esc(d.slice(8, 10) + '/' + d.slice(5, 7)) + '</span></div>';
+    }).join('') + '</div>';
+  }
+
+  function barraUsuario() {
+    var el = document.getElementById('userbar');
+    el.innerHTML = '<span class="quien">Sesión: <b>' + esc(yo.usuario) + '</b> · ' + (yo.rol === 'admin' ? 'Administrador' : 'Cliente') + '</span>' +
+      '<span class="row"><button class="btn sec" id="b-clave" type="button">Cambiar contraseña</button><button class="btn sec" id="b-salir" type="button">Cerrar sesión</button></span>';
+    document.getElementById('b-salir').addEventListener('click', function () {
+      enviarJSON('/api/auth/logout').then(function () { location.href = '/login'; }, function () { location.href = '/login'; });
+    });
+    document.getElementById('b-clave').addEventListener('click', formClave);
+  }
+  function formClave() {
+    $vista.innerHTML = '<div class="card"><h2 style="margin-top:0">Cambiar contraseña</h2><form class="form" id="fc">' +
+      '<label>Contraseña actual<input type="password" id="ca" autocomplete="current-password" required></label>' +
+      '<label>Contraseña nueva (mínimo 10 caracteres)<input type="password" id="cn" autocomplete="new-password" minlength="10" required></label>' +
+      '<div id="msg"></div><div class="row"><button class="btn" type="submit">Guardar</button><button class="btn sec" type="button" id="cx">Volver</button></div></form></div>';
+    document.getElementById('cx').addEventListener('click', cargar);
+    document.getElementById('fc').addEventListener('submit', function (ev) {
+      ev.preventDefault();
+      var m = document.getElementById('msg');
+      enviarJSON('/api/auth/cambiar-clave', { clave_actual: document.getElementById('ca').value, clave_nueva: document.getElementById('cn').value }).then(function () {
+        m.innerHTML = '<div class="ok">Contraseña cambiada. Se cerraron tus otras sesiones.</div>';
+      }, function (e) { m.innerHTML = '<div class="aviso">' + esc(e.message) + '</div>'; });
+    });
+  }
+
+  function cargar(silencioso) {
+    var mi = ++seq;
+    if (silencioso !== true) $vista.innerHTML = '<div class="vacio">Cargando…</div>';
+    vistas[tabActual]().then(function (html) {
+      if (mi !== seq) return;
+      $vista.innerHTML = html; enlazar();
+    }, function (e) { if (mi === seq && silencioso !== true) error(e); });
+  }
+  function pintarTabs() {
+    $tabs.innerHTML = TABS.map(function (t) { return '<button class="tab" role="tab" data-t="' + t[0] + '" aria-selected="' + (t[0] === tabActual) + '">' + esc(t[1]) + '</button>'; }).join('');
+    Array.prototype.forEach.call($tabs.children, function (b) {
+      b.addEventListener('click', function () { tabActual = b.getAttribute('data-t'); try { history.replaceState(null, '', '#' + tabActual); } catch (e) {} pintarTabs(); cargar(); });
+    });
+  }
+  function iniciar() {
+    fetch('/api/auth/yo', { credentials: 'same-origin' }).then(function (r) { if (!r.ok) throw 0; return r.json(); }).then(function (u) {
+      if (ROLES_PERMITIDOS.indexOf(u.rol) < 0) { location.href = '/login'; return; }
+      yo = u; barraUsuario();
+      var h = (location.hash || '').slice(1); if (vistas[h]) tabActual = h;
+      pintarTabs(); cargar();
+      setInterval(function () { if (!document.hidden && AUTO.indexOf(tabActual) >= 0) cargar(true); }, 4000);
+      document.addEventListener('visibilitychange', function () { if (!document.hidden && AUTO.indexOf(tabActual) >= 0) cargar(true); });
+    }, irALogin);
+  }
+
+
+  var API = '/api/cliente/';
+  var ROLES_PERMITIDOS = ['cliente', 'admin'];
+  var AUTO = ['resumen', 'cotizaciones', 'pedidos'];
+  var TABS = [['resumen', 'Resumen'], ['pedidos', 'Pedidos'], ['cotizaciones', 'Cotizaciones'], ['conversaciones', 'Conversaciones'], ['catalogo', 'Catálogo']];
+  var vistas = {
+    resumen: function () {
+      return pedir('resumen').then(function (s) {
+        return '<div class="grid kpis">' +
+          kpi('Pedidos (tótem)', s.pedidos.total, s.pedidos.hoy + ' hoy') +
+          kpi('Cotizaciones', s.cotizaciones.total, s.cotizaciones.hoy + ' hoy · ' + clp(s.cotizaciones.monto_total)) +
+          kpi('Conversaciones', s.conversaciones.total, s.conversaciones.hoy + ' hoy') +
+          kpi('Productos en catálogo', s.productos_catalogo, 'Catálogo real') + '</div>' +
+          '<h2>Pedidos activos por estado <small style="font-weight:400;font-size:12px">(lo mismo que ve el panel de bodega; los reiniciados quedan archivados)</small></h2>' +
+          '<div class="card row">' + s.pedidos.por_estado.map(function (e) { return '<span class="badge b-ok">' + esc(e.estado) + ': ' + esc(e.cantidad) + '</span>'; }).join('') + '</div>' +
+          '<h2>Últimos 7 días</h2><div class="card"><div class="leyenda"><span style="color:#86B08A">■ Conversaciones</span><span style="color:#5E7A5D">■ Cotizaciones</span><span style="color:#C9796A">■ Pedidos</span></div>' +
+          barras(s.dias, [{ valores: s.por_dia.conversaciones, color: '#86B08A' }, { valores: s.por_dia.cotizaciones, color: '#5E7A5D' }, { valores: s.por_dia.pedidos, color: '#C9796A' }]) + '</div>' +
+          '<h2>Accesos rápidos</h2><div class="card row"><a class="btn sec" href="/chatbot">Chatbot web</a><a class="btn sec" href="/totem">Tótem de autoatención</a><a class="btn" href="/bodega" target="_blank" rel="noopener">Panel de bodega ↗</a></div>';
+      });
+    },
+    pedidos: function () {
+      return pedir('pedidos').then(function (r) {
+        return '<div class="card"><div class="row" style="justify-content:space-between"><h2 style="margin:0">Pedidos del tótem</h2><a class="btn" href="/bodega" target="_blank" rel="noopener">Gestionar en panel de bodega ↗</a></div>' +
+          '<p class="sub" style="margin:8px 0 12px">Todos los pedidos, incluidos los archivados al reiniciar la demo. El estado se cambia desde el panel de bodega.</p>' +
+          tabla(['N°', 'Fecha', 'Productos', 'Total', 'Estado'], r.pedidos.map(function (p) {
+            return '<tr><td>#' + p.numero + '</td><td>' + fecha(p.creado) + '</td><td>' + p.items.map(function (i) { return esc(i.cant) + '× ' + esc(i.nombre); }).join('<br>') + '</td><td>' + clp(p.total) + '</td><td>' +
+              esc(ESTADOS[p.estado] || p.estado) + (p.archivado ? ' <span class="badge b-demo">archivado</span>' : '') + '</td></tr>';
+          })) + '</div>';
+      });
+    },
+    cotizaciones: function () {
+      return pedir('cotizaciones').then(function (r) {
+        return '<div class="card"><h2 style="margin-top:0">Cotizaciones generadas por el chatbot</h2>' + tabla(['N°', 'Fecha', 'Canal', 'Productos', 'Total', 'Archivo'], r.cotizaciones.map(function (c) {
+          return '<tr><td>' + c.id + '</td><td>' + fecha(c.creada) + '</td><td>' + canalNombre(c.canal) + '</td><td>' +
+            c.items.map(function (i) { return esc(i.nombre) + ' (' + clp(i.precio) + ')'; }).join('<br>') + '</td><td>' + clp(c.total) + '</td><td>' +
+            (c.archivo ? '<a class="link" href="/api/pdf/' + encodeURIComponent(c.archivo) + '" target="_blank" rel="noopener">Descargar PDF</a>' : '—') + '</td></tr>';
+        })) + '</div>';
+      });
+    },
+    conversaciones: function () {
+      return pedir('conversaciones').then(function (r) {
+        return '<div class="card"><h2 style="margin-top:0">Conversaciones</h2>' + tabla(['N°', 'Canal', 'Última actividad', 'Mensajes', 'Último mensaje del cliente', ''], r.conversaciones.map(function (c) {
+          return '<tr><td>' + c.id + '</td><td>' + canalNombre(c.canal) + '</td><td>' + fecha(c.actualizada) + '</td><td>' + c.n_mensajes + '</td><td>' + esc(String(c.ultimo_mensaje || '').slice(0, 60)) +
+            '</td><td><button class="link" data-conv="' + c.id + '">Ver</button></td></tr>';
+        })) + '</div><div id="detalle"></div>';
+      });
+    },
+    catalogo: function () {
+      return Promise.resolve('<div class="card"><h2 style="margin-top:0">Catálogo (solo lectura)</h2>' +
+        '<form id="fq" class="row"><input type="search" id="q" placeholder="Buscar producto (ej: shampoo)" aria-label="Buscar producto"><button class="btn" type="submit">Buscar</button></form><div id="res" style="margin-top:12px"></div></div>');
+    }
+  };
+  function enlazar() {
+    var q = document.getElementById('fq');
+    if (q) q.addEventListener('submit', function (ev) {
+      ev.preventDefault();
+      var out = document.getElementById('res');
+      pedir('catalogo?q=' + encodeURIComponent(document.getElementById('q').value.trim()) + '&limite=25').then(function (r) {
+        out.innerHTML = '<p class="sub" style="margin:0 0 8px">' + r.total + ' resultado(s)' + (r.total > r.productos.length ? ' · mostrando ' + r.productos.length : '') + '</p>' +
+          tabla(['ID', 'Producto', 'Precio'], r.productos.map(function (p) { return '<tr><td>' + p.id + '</td><td>' + esc(p.nombre) + '</td><td>' + clp(p.precio) + '</td></tr>'; }));
+      }, function (e) { if (e.status === 401) irALogin(); else out.innerHTML = '<div class="aviso">' + esc(e.message) + '</div>'; });
+    });
+    Array.prototype.forEach.call($vista.querySelectorAll('[data-conv]'), function (b) {
+      b.addEventListener('click', function () {
+        var d = document.getElementById('detalle');
+        pedir('conversaciones/' + b.getAttribute('data-conv')).then(function (c) {
+          d.innerHTML = '<div class="card" style="margin-top:14px"><b>Conversación #' + c.id + ' · ' + canalNombre(c.canal) + '</b><div class="chat">' +
+            c.mensajes.map(function (m) { return '<div class="msg m-' + (m.rol === 'cliente' ? 'cliente' : 'bot') + '">' + esc(m.texto) + '<small>' + (m.rol === 'cliente' ? 'Cliente' : 'Asistente') + ' · ' + fecha(m.creado) + '</small></div>'; }).join('') + '</div></div>';
+          d.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }, error);
+      });
+    });
+  }
+  iniciar();
+
+})();
+</script>
+<script src="/nav.js" defer></script>
+</body>
+</html>

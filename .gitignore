@@ -4,6 +4,10 @@ cotizaciones/
 logs/
 *.log
 
+# Base de datos de la plataforma (datos reales de clientes y pedidos: no subir)
+data/plataforma.db
+data/plataforma.db-*
+
 # Python
 __pycache__/
 *.pyc

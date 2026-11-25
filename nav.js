@@ -20,6 +20,7 @@
     { id: 'chatbot',  texto: 'Chatbot Web',           href: '/chatbot' },
     { id: 'totem',    texto: 'Tótem de Autoatención', href: '/totem' },
     { id: 'bodega',   texto: 'Panel de bodega',       href: '/bodega', nuevaPestana: true, sub: true },
+    { id: 'plataforma', texto: 'Plataforma',         href: '/plataforma' },
     { id: 'whatsapp', texto: 'WhatsApp',              href: '/whatsapp', etiqueta: 'Próximamente' }
   ];
 
@@ -30,6 +31,7 @@
     if (p === '/totem' || p === '/totem/totem.html') return 'totem';
     if (p === '/bodega' || p === '/totem/bodega.html') return 'bodega';
     if (p === '/whatsapp') return 'whatsapp';
+    if (p === '/plataforma' || p === '/login' || p === '/admin' || p === '/cliente') return 'plataforma';
     return '';
   }
 

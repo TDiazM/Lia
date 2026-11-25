@@ -130,11 +130,15 @@
   function enviarPedido() {
     var ls = lineas();
     if (!ls.length) return;
-    var pedido = Store.crear(ls.map(function (l) { return { id: l.p.id, nombre: l.p.nombre, precio: l.p.precio, cant: l.cant }; }));
-    st.pedidoId = pedido.id;
-    st.estadoVisto = pedido.estado;
-    st.carrito = {};
-    ir('seguimiento');
+    if (st.enviando) return;           // evita pedidos duplicados por doble toque
+    st.enviando = true;
+    Promise.resolve(Store.crear(ls.map(function (l) { return { id: l.p.id, nombre: l.p.nombre, precio: l.p.precio, cant: l.cant }; }))).then(function (pedido) {
+      st.enviando = false;
+      st.pedidoId = pedido.id;
+      st.estadoVisto = pedido.estado;
+      st.carrito = {};
+      ir('seguimiento');
+    }, function () { st.enviando = false; aviso('No se pudo enviar el pedido. Inténtalo de nuevo.'); });
   }
 
   /* ---------- seguimiento ---------- */

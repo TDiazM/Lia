@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Lia · Iniciar sesión</title>
+<style>
+  :root{--cream-50:#FAF7EE;--cream-100:#F6EFD9;--cream-200:#EBDCB4;--mint-100:#E8F2E5;--mint-200:#CDE2C7;--sage:#86B08A;
+        --forest-800:#5E7A5D;--forest-900:#3F533E;--forest-950:#283627;--terra:#C9796A;--terra-600:#B56354}
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--cream-100);color:var(--forest-950);font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+       padding-top:var(--pits-nav-h,0px);line-height:1.5}
+  .wrap{max-width:1100px;margin:0 auto;padding:24px 16px 64px}
+  h1{font-size:clamp(24px,4vw,34px);margin:0 0 4px;font-weight:800;letter-spacing:-.02em}
+  h1 span{color:var(--terra)}
+  .sub{color:rgba(40,54,39,.75);margin:0 0 20px}
+  .tabs{display:flex;gap:8px;overflow-x:auto;padding-bottom:6px;margin-bottom:18px;-webkit-overflow-scrolling:touch}
+  .tab{border:1px solid var(--mint-200);background:var(--cream-50);color:var(--forest-900);font:inherit;font-weight:600;font-size:14px;
+       padding:9px 16px;border-radius:12px;cursor:pointer;white-space:nowrap;transition:background .2s,transform .15s,box-shadow .2s}
+  .tab:hover{background:var(--mint-100)}
+  .tab[aria-selected=true]{background:var(--forest-800);color:var(--cream-50);border-color:var(--forest-800);box-shadow:0 4px 12px rgba(63,83,62,.25)}
+  .tab:focus-visible,.btn:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid var(--terra);outline-offset:2px}
+  .card{background:var(--cream-50);border:1px solid var(--mint-200);border-radius:18px;padding:18px;box-shadow:0 1px 3px rgba(40,54,39,.06)}
+  .grid{display:grid;gap:14px}
+  .kpis{grid-template-columns:repeat(auto-fit,minmax(170px,1fr))}
+  .kpi .n{font-size:30px;font-weight:800;color:var(--forest-800)}
+  .kpi .l{font-size:12px;font-weight:600;color:rgba(40,54,39,.7);text-transform:uppercase;letter-spacing:.05em}
+  .kpi .s{font-size:12px;color:rgba(40,54,39,.65);margin-top:2px}
+  h2{font-size:18px;margin:26px 0 10px}
+  .canales{grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
+  .badge{display:inline-block;font-size:11px;font-weight:700;padding:3px 10px;border-radius:99px;border:1px solid}
+  .b-ok{background:var(--mint-200);color:var(--forest-900);border-color:var(--sage)}
+  .b-demo{background:var(--cream-200);color:#7a5a1f;border-color:#d8c38a}
+  .b-dev{background:rgba(201,121,106,.15);color:var(--terra-600);border-color:rgba(201,121,106,.4)}
+  .btn{display:inline-flex;align-items:center;gap:6px;background:var(--forest-800);color:var(--cream-50);font:inherit;font-weight:600;font-size:13px;
+       padding:8px 14px;border-radius:10px;border:0;text-decoration:none;cursor:pointer;transition:background .2s,transform .15s}
+  .btn:hover{background:var(--forest-900);transform:translateY(-1px)}
+  .btn.sec{background:var(--cream-50);color:var(--forest-900);border:1px solid var(--mint-200)}
+  .btn.sec:hover{background:var(--mint-100)}
+  .row{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+  .bars{display:flex;align-items:flex-end;gap:8px;height:130px;margin-top:8px}
+  .bar{flex:1;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;gap:4px;height:100%;min-width:0}
+  .bar i{display:block;width:100%;max-width:34px;background:var(--sage);border-radius:6px 6px 0 0;min-height:2px;transition:height .5s}
+  .bar b{font-size:11px}
+  .bar span{font-size:10px;color:rgba(40,54,39,.65)}
+  .leyenda{font-size:12px;color:rgba(40,54,39,.7);display:flex;gap:12px;flex-wrap:wrap}
+  table{width:100%;border-collapse:collapse;font-size:14px}
+  th,td{text-align:left;padding:9px 10px;border-bottom:1px solid var(--mint-200);vertical-align:top}
+  th{font-size:12px;text-transform:uppercase;letter-spacing:.05em;color:rgba(40,54,39,.7)}
+  .scroll{overflow-x:auto}
+  .vacio{color:rgba(40,54,39,.7);padding:18px;text-align:center}
+  .aviso{background:rgba(201,121,106,.12);border:1px solid rgba(201,121,106,.4);color:var(--terra-600);border-radius:12px;padding:12px 14px;margin-bottom:14px;font-size:14px}
+  .nota{background:var(--cream-200);border:1px solid #d8c38a;color:#6b4f17;border-radius:12px;padding:10px 14px;font-size:13px;margin:10px 0}
+  input[type=text],input[type=password],input[type=search]{font:inherit;padding:9px 12px;border-radius:10px;border:1px solid var(--mint-200);background:#fff;min-width:0;flex:1}
+  .chat{display:flex;flex-direction:column;gap:8px;margin-top:10px;max-height:60vh;overflow:auto}
+  .msg{padding:8px 12px;border-radius:14px;max-width:85%;white-space:pre-wrap;word-break:break-word;font-size:14px}
+  .m-cliente{align-self:flex-end;background:var(--mint-200)}
+  .m-bot{align-self:flex-start;background:#fff;border:1px solid var(--mint-200)}
+  .msg small{display:block;font-size:10px;color:rgba(40,54,39,.55);margin-top:2px}
+  .link{background:none;border:0;color:var(--terra-600);font:inherit;font-weight:600;cursor:pointer;padding:0;text-decoration:underline}
+  dl{display:grid;grid-template-columns:minmax(120px,200px) 1fr;gap:8px 14px;margin:0}
+  dt{font-weight:600;color:rgba(40,54,39,.75)} dd{margin:0;word-break:break-word}
+  .prox{opacity:.85;border-style:dashed}
+  @media (max-width:520px){dl{grid-template-columns:1fr}.wrap{padding:16px 12px 48px}}
+  @media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+
+  .userbar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:space-between;margin-bottom:6px}
+  .userbar .quien{font-size:13px;color:rgba(40,54,39,.75)}
+  .userbar .quien b{color:var(--forest-950)}
+  .chips{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 14px}
+  .chip{border:1px solid var(--mint-200);background:#fff;color:var(--forest-900);font:inherit;font-size:13px;font-weight:600;padding:6px 12px;border-radius:99px;cursor:pointer;transition:background .2s}
+  .chip:hover{background:var(--mint-100)}
+  .chip[aria-pressed=true]{background:var(--terra);border-color:var(--terra);color:#fff}
+  .chip small{opacity:.8;font-weight:500}
+  .form{display:grid;gap:12px;max-width:380px}
+  .form label{font-size:13px;font-weight:600;display:grid;gap:4px}
+  .ok{background:var(--mint-200);border:1px solid var(--sage);color:var(--forest-900);border-radius:12px;padding:10px 14px;font-size:14px}
+
+  .login{max-width:420px;margin:40px auto 0}
+</style>
+</head>
+<body>
+<div class="wrap"><div class="login">
+  <h1>Iniciar sesión <span>Lia</span></h1>
+  <p class="sub">Accede a tu panel de la plataforma.</p>
+  <div class="card" id="caja"></div>
+</div></div>
+<script>
+(function () {
+  'use strict';
+  var caja = document.getElementById('caja');
+  function esc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
+  function destino(rol) {
+    var v = new URLSearchParams(location.search).get('volver');
+    if (v === '/admin' && rol === 'admin') return v;
+    if (v === '/cliente') return v;          // el administrador también puede abrir /cliente
+    return rol === 'admin' ? '/admin' : '/cliente';
+  }
+  function formulario(msg) {
+    caja.innerHTML = '<form class="form" id="f"><label>Usuario<input type="text" id="u" autocomplete="username" maxlength="60" required autofocus></label>' +
+      '<label>Contraseña<input type="password" id="p" autocomplete="current-password" maxlength="200" required></label>' +
+      '<div id="msg">' + (msg ? '<div class="aviso">' + esc(msg) + '</div>' : '') + '</div><button class="btn" type="submit" id="go">Entrar</button></form>' +
+      '<p style="font-size:12px;color:rgba(40,54,39,.65);margin:14px 0 0">¿No tienes usuario? Pídeselo a quien administra la plataforma.</p>';
+    document.getElementById('f').addEventListener('submit', function (ev) {
+      ev.preventDefault();
+      var go = document.getElementById('go'), m = document.getElementById('msg');
+      go.disabled = true; go.textContent = 'Entrando…'; m.innerHTML = '';
+      fetch('/api/auth/login', { method: 'POST', credentials: 'same-origin', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ usuario: document.getElementById('u').value, clave: document.getElementById('p').value }) })
+        .then(function (r) { return r.json().catch(function () { return {}; }).then(function (j) { return { ok: r.ok, j: j }; }); })
+        .then(function (x) {
+          if (!x.ok) throw new Error(typeof x.j.detail === 'string' ? x.j.detail : 'No se pudo iniciar sesión');
+          location.href = destino(x.j.rol);
+        })
+        .catch(function (e) {
+          go.disabled = false; go.textContent = 'Entrar';
+          m.innerHTML = '<div class="aviso">' + esc(e instanceof TypeError ? 'No pudimos conectar con el servidor.' : e.message) + '</div>';
+        });
+    });
+  }
+  fetch('/api/auth/yo', { credentials: 'same-origin' }).then(function (r) { if (!r.ok) throw 0; return r.json(); }).then(function (u) {
+    caja.innerHTML = '<p>Ya iniciaste sesión como <b>' + esc(u.usuario) + '</b> (' + (u.rol === 'admin' ? 'administrador' : 'cliente') + ').</p><div class="row">' +
+      '<a class="btn" href="' + (u.rol === 'admin' ? '/admin' : '/cliente') + '">Ir a mi panel</a><button class="btn sec" id="out" type="button">Cerrar sesión</button></div>';
+    document.getElementById('out').addEventListener('click', function () {
+      fetch('/api/auth/logout', { method: 'POST', credentials: 'same-origin' }).then(function () { formulario(); }, function () { formulario(); });
+    });
+  }, function () { formulario(); });
+})();
+</script>
+<script src="/nav.js" defer></script>
+</body>
+</html>
