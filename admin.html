@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+  <!DOCTYPE html>
 <html lang="es">
 <head>
 <meta charset="UTF-8">
@@ -241,13 +241,12 @@
         }).join('') + '</div><h2>Configuración (solo lectura)</h2><div class="card"><dl>' +
           '<dt>Empresa</dt><dd>' + esc(cfg.nombre_empresa) + '</dd><dt>Moneda</dt><dd>' + esc(cfg.moneda) + '</dd>' +
           '<dt>Orígenes permitidos (CORS)</dt><dd>' + esc((cfg.origenes_permitidos || []).join(', ')) + '</dd>' +
-          '<dt>Aviso por correo</dt><dd>' + esc(cfg.correo_de_avisos) + '</dd><dt>Grupos de sinónimos</dt><dd>' + esc(cfg.grupos_de_sinonimos) + '</dd><dt>Acceso a los paneles</dt><dd>' + esc(cfg.acceso_panel) + '</dd></dl>' +
-          '<p class="nota">La configuración se edita en <code>config.json</code> y <code>keywords.json</code>; los usuarios se crean con <code>python crear_usuario.py</code>. Desde aquí no se modifican.</p></div>';
+          '<dt>Aviso por correo</dt><dd>' + esc(cfg.correo_de_avisos) + '</dd><dt>Grupos de sinónimos</dt><dd>' + esc(cfg.grupos_de_sinonimos) + '</dd><dt>Acceso a los paneles</dt><dd>' + esc(cfg.acceso_panel) + '</dd></dl>'  + '</div>';
       });
     },
     proximos: function () {
       var mods = [['Gestión de clientes', 'Varios clientes en una misma plataforma, cada uno con sus datos aislados.'], ['Reportes avanzados', 'Informes por periodo, producto y canal, con exportación.'], ['Usuarios desde el panel', 'Crear y desactivar usuarios sin usar la terminal (hoy se hace con crear_usuario.py).'], ['Seguimiento de solicitudes', 'Marcar cada solicitud como contactada o cerrada.'], ['WhatsApp', 'Atención automática por WhatsApp (API Webhook).']];
-      return Promise.resolve('<div class="nota">Estos módulos <b>aún no están desarrollados</b>. Se muestran como hoja de ruta; no tienen funcionalidad.</div><div class="grid canales">' +
+      return Promise.resolve('<div class="grid canales">' +
         mods.map(function (m) { return '<div class="card prox"><div class="row" style="justify-content:space-between"><b>' + m[0] + '</b><span class="badge b-dev">En desarrollo</span></div><p style="font-size:13px;margin:8px 0 0">' + m[1] + '</p></div>'; }).join('') + '</div>');
     }
   };
